@@ -19,6 +19,8 @@ class Solution {
             map.put(s.charAt(i),i);
         }
         
+        int k = 9;
+        
         return maxLen;
     }
 }
