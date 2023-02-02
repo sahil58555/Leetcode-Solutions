@@ -1,52 +1,48 @@
 class BrowserHistory {
 
-    private Node curr;
+    private final ArrayList<String> urls;
+    private int curr;
+    private int size;
     
     public BrowserHistory(String homepage) {
         
-        curr = new Node(homepage);
+        urls = new ArrayList<>();
+        urls.add(homepage);
+        curr = 0;
+        size = 1;
     }
     
     public void visit(String url) {
         
-        Node next = new Node(url);
-        curr.next = next;
-        next.prev = curr;
-        curr = curr.next;
+        int index = curr + 1;
+        
+        if(index < urls.size()) {
+            
+            urls.set(index, url);
+        }
+        else {
+            
+            urls.add(url);
+        }
+        
+        curr++;
+        size = curr + 1;
     }
     
     public String back(int steps) {
         
-        while(steps > 0 && curr.prev != null) {
-            
-            steps--;
-            curr = curr.prev;
-        }
+        int index = Math.max(curr - steps, 0);
+        curr = index;
         
-        return curr.url;
+        return urls.get(curr);
     }
     
     public String forward(int steps) {
-     
-        while(steps > 0 && curr.next != null) {
-            
-            steps--;
-            curr = curr.next;
-        }
         
-        return curr.url;
-    }
-}
-
-class Node {
-    
-    String url;
-    Node prev;
-    Node next;
-    
-    Node(String url) {
+        int index = Math.min(size - 1, curr + steps);
+        curr = index;
         
-        this.url = url;
+        return urls.get(curr);
     }
 }
 
