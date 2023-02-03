@@ -35,7 +35,7 @@ class Solution {
             
             for(char[] arr : list) {
                 
-                if(arr[i] != '\u0000') {
+                if(arr[i] != 0) {
                     
                     sb.append(arr[i]);
                 }
