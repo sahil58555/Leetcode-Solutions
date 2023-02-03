@@ -33,6 +33,7 @@ class Solution {
                 }
                 
                 swap(arr, i, max[i]);
+                break;
             }
         }
         
