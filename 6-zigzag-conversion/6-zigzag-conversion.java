@@ -8,7 +8,7 @@ class Solution {
         while(idx < s.length()) {
             
             char[] arr = new char[numRows];
-            Arrays.fill(arr, '#');
+            //Arrays.fill(arr, '#');
             
             if(col == 0 || col == numRows - 1) {
                 
@@ -24,7 +24,7 @@ class Solution {
                 arr[col] = s.charAt(idx++);
             }
             
-            col = Math.max(0, col - 1);
+            col = Math.max(0, col - 1); // edge case
             
             list.add(arr);
         }
@@ -35,7 +35,7 @@ class Solution {
             
             for(char[] arr : list) {
                 
-                if(arr[i] != '#') {
+                if(arr[i] != '\u0000') {
                     
                     sb.append(arr[i]);
                 }
