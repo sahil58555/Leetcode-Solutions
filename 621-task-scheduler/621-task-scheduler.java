@@ -1,7 +1,6 @@
 class Solution {
     public int leastInterval(char[] tasks, int n) {
         
-        int[] time = new int[26];
         int[] freq = new int[26];
         
         for(char task : tasks) {
@@ -9,38 +8,15 @@ class Solution {
             freq[task - 'A']++;
         }
         
-        int currDay = 0;
-        int count = 0;
+        Arrays.sort(freq);
         
-        while(count < tasks.length) {
+        int ideal = (freq[25] - 1) * n;
+        
+        for(int i = 0 ; i < 25 ; i++) {
             
-            int max = -1;
-            int index = -1;
-            
-            for(char task = 'A' ; task <= 'Z' ; task++) {
-                
-                if(currDay >= time[task - 'A'] && freq[task - 'A'] > 0) {
-                    
-                    if(freq[task - 'A'] > max) {
-                        
-                        index = task - 'A';
-                        max = freq[task - 'A'];
-                    }
-                    
-                } 
-            }
-            
-            if(index != -1) {
-                
-                
-                freq[index]--;
-                count++;
-                time[index] = n + currDay + 1;
-            }
-            
-            currDay++;
+            ideal -= Math.min(freq[i], freq[25] - 1);
         }
         
-        return currDay;
+        return tasks.length + Math.max(0, ideal);
     }
 }
