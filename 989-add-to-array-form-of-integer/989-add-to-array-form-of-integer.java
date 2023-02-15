@@ -5,37 +5,17 @@ class Solution {
         int idx = nums.length - 1;
         int carry = 0;
         
-        while(idx >= 0 && k > 0) {
+        while(idx >= 0 || k > 0 || carry == 1) {
             
-            int sum = nums[idx] + k % 10 + carry;
+            int digitAtNum = (idx < 0) ? 0 : nums[idx];
+            int digitAtK = (k <= 0) ? 0 : k % 10;
+            
+            int sum = digitAtNum + digitAtK + carry;
             ans.add(sum % 10);
             carry = sum / 10;
             
             k /= 10;
             idx--;
-        }
-        
-        while(idx >= 0) {
-            
-            int sum = nums[idx] + carry;
-            ans.add(sum % 10);
-            carry = sum / 10;
-            
-            idx--;
-        }
-        
-        while(k > 0) {
-            
-            int sum = k % 10 + carry;
-            ans.add(sum % 10);
-            carry = sum / 10;
-            
-            k /= 10;
-        }
-        
-        if(carry == 1) {
-            
-            ans.add(carry);
         }
         
         Collections.reverse(ans);
