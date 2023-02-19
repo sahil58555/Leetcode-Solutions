@@ -5,7 +5,7 @@ class Solution {
         int first = 0 , second = 0;
         int n = pushed.length;
         
-        while(first < n && second < n) {
+        while(first < n) {
             
             st.push(pushed[first++]);
             
