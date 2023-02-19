@@ -1,39 +1,43 @@
 class Solution {
     public int maxProfit(int[] prices) {
         
-        int[][] dp = new int[prices.length + 1][2];
+        int[] next = new int[2];
         int n = prices.length;
         
         for(int idx = n ; idx >= 0 ; idx--) {
+            
+            int[] curr = new int[2];
             
             for(int haveStock = 0 ; haveStock <= 1 ; haveStock++) {
              
                 if(idx == n) {
                 
-                    dp[idx][haveStock] = 0;
+                    curr[haveStock] = 0;
                 }
                 else {
 
-                    int option1 = dp[idx+1][haveStock]; // skipping
+                    int option1 = next[haveStock]; // skipping
                     int option2 = 0;
 
                     if(haveStock == 1) {
 
                         // selling
-                        option2 = prices[idx] + dp[idx+1][0];
+                        option2 = prices[idx] + next[0];
                     }
                     else {
 
                         // buying
-                        option2 = dp[idx+1][1] - prices[idx];
+                        option2 = next[1] - prices[idx];
                     }
 
-                    dp[idx][haveStock] = Math.max(option1,option2);
+                    curr[haveStock] = Math.max(option1,option2);
                 }
             }
+            
+            next = curr;
         }
         
-        return dp[0][0];
+        return next[0];
     }
     
     private int maxProfit(int idx,int[] prices,int haveStock,int[][] dp) {
