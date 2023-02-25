@@ -37,10 +37,13 @@ class Solution {
         
         for(int i = 0 ; i < n ; i++) {
             
-            long len = right[i] - left[i] - 1;
-            len = (len + 1l * (i - left[i] - 1) * (right[i] - i - 1)) % mod;
+            long leftCount = i - left[i] - 1;
+            long rightCount = right[i] - i;
             
-            long currVal = 1l * arr[i] * len;
+            long total = (rightCount + (leftCount * rightCount) % mod) % mod;
+            System.out.println(total);
+            
+            long currVal = 1l * arr[i] * total;
             ans = (ans + currVal) % mod;
         }
         
