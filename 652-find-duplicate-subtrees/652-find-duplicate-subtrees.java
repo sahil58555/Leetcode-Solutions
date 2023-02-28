@@ -17,35 +17,47 @@ class Solution {
     
     private Map<String, Integer> map;
     private List<TreeNode> ans;
+    private int id;
+    private Set<String> seen;
     
     public List<TreeNode> findDuplicateSubtrees(TreeNode root) {
         
         map = new HashMap<>();
         ans = new ArrayList<>();
+        seen = new HashSet<>();
+        id = 1;
         
         DFS(root);
         
         return ans;
     }
     
-    private String DFS(TreeNode root) {
+    private int DFS(TreeNode root) {
         
         if(root == null) {
             
-            return ".";
+            return 0;
         }
         
-        String left = DFS(root.left);
-        String right = DFS(root.right);
+        int left = DFS(root.left);
+        int right = DFS(root.right);
         
-        String hash = root.val + "L" + left + "R" + right;
-        map.put(hash, map.getOrDefault(hash, 0) + 1);
+        String hash = root.val + "," + left + "," + right;
         
-        if(map.get(hash) == 2) {
+        if(map.containsKey(hash)) {
             
-            ans.add(root);
+            if(!seen.contains(hash)) {
+                
+                ans.add(root);
+                seen.add(hash);
+            }
+        }
+        else {
+            
+            map.put(hash, id);
+            id++;
         }
         
-        return hash;
+        return map.get(hash);
     }
 }
