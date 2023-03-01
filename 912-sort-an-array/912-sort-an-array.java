@@ -1,60 +1,62 @@
 class Solution {
     public int[] sortArray(int[] nums) {
-    
-        Arrays.sort(nums);
+     
+        quickSort(0, nums.length - 1, nums);
+        
         return nums;
-        //return mergeSort(0, nums.length - 1, nums);
     }
     
-    private int[] mergeSort(int low, int high, int[] nums) {
+    private void quickSort(int start, int end, int[] nums) {
         
-        if(low == high) {
+        if(start > end) {
             
-            return new int[]{nums[low]};
+            return ;
         }
         
-        int mid = (low + high) >> 1;
+        int randomIndex = getRandomNumberInRange(start, end);
+        swap(nums, randomIndex, end);
         
-        int[] left = mergeSort(low, mid, nums);
-        int[] right = mergeSort(mid + 1, high, nums);
+        int pivot = nums[end];
+        int partitionIndex = partitionTheArray(start, end, nums, pivot);
         
-        int[] result = merge(left, right);
-        
-        return result;
+        quickSort(start, partitionIndex - 1, nums);
+        quickSort(partitionIndex + 1, end, nums);
     }
     
-    private int[] merge(int[] left, int[] right) {
+    private int partitionTheArray(int start, int end, int[] nums, int pivot) {
         
-        int n = left.length;
-        int m = right.length;
+        int front = start;
+        int back = start;
         
-        int[] ans = new int[n + m];
-        int idx = 0;
-        
-        int first = 0, second = 0;
-        
-        while(first < n && second < m) {
+        while(front <= end) {
             
-            if(left[first] <= right[second]) {
+            if(nums[front] <= pivot) {
                 
-                ans[idx++] = left[first++];
+                swap(nums, front, back);
+                front++;
+                back++;
             }
             else {
                 
-                ans[idx++] = right[second++];
+                front++;
             }
         }
         
-        while(first < n) {
-            
-            ans[idx++] = left[first++];
-        }
+        return back - 1;
+    }
+    
+    private void swap(int[] nums, int idx1, int idx2) {
         
-        while(second < m) {
-            
-            ans[idx++] = right[second++];
-        }
+        int temp = nums[idx1];
+        nums[idx1] = nums[idx2];
+        nums[idx2] = temp;
+    }
+    
+    private int getRandomNumberInRange(int start, int end) {
         
-        return ans;
+        int length = end - start + 1;
+        int randomNo = (int)(Math.random() * length) + start;
+        
+        return randomNo;
     }
 }
