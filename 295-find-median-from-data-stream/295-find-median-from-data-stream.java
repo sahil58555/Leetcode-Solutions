@@ -12,35 +12,22 @@ class MedianFinder {
     
     public void addNum(int num) {
         
-        if(maxHeap.size()==0)
-        {
+        if(maxHeap.size() == 0 || num <= maxHeap.peek()) {
+            
             maxHeap.add(num);
-            return;
+        }
+        else {
+            
+            minHeap.add(num);
         }
         
-        if(maxHeap.size()==minHeap.size())
-        {
-            if(num>minHeap.peek())
-            {
-                maxHeap.add(minHeap.remove());
-                minHeap.add(num);
-            }
-            else
-            {
-                maxHeap.add(num);
-            }
+        if(maxHeap.size() == minHeap.size() + 2) {
+            
+            minHeap.add(maxHeap.remove());
         }
-        else
-        {
-            if(num<maxHeap.peek())
-            {
-                minHeap.add(maxHeap.remove());
-                maxHeap.add(num);
-            }
-            else
-            {
-                minHeap.add(num);
-            }
+        else if(maxHeap.size() + 1 == minHeap.size()) {
+            
+            maxHeap.add(minHeap.remove());
         }
         
     }
