@@ -6,48 +6,45 @@ class Solution {
         
         String str = pattern + "#" + text;
         
-        int[] lps = getLPSArray(str);
+        int[] z = getZArray(str);
         
-        for(int i = m + 1 ; i < lps.length ; i++) {
+        for(int i = m + 1 ; i < z.length ; i++) {
             
-            if(lps[i] == m) {
+            if(z[i] == m) {
                 
-                return i - 2 * m;
+                return i - m - 1;
             }
         }
         
         return -1;
     }
     
-    private int[] getLPSArray(String str) {
+    private int[] getZArray(String str) {
         
         int n = str.length();
-        int[] lps = new int[n];
+        int[] z = new int[n];
         
-        int i = 1 , length = 0;
+        int left = 0, right = 0;
         
-        while(i < n) {
+        for(int i = 1 ; i < n ; i++) {
             
-            if(str.charAt(i) == str.charAt(length)) {
+            if(i <= right) {
                 
-                length++;
-                lps[i] = length;
-                i++;
+                z[i] = Math.min(right - i + 1, z[i - left]);
             }
-            else {
+            
+            while(i + z[i] < n && str.charAt(z[i]) == str.charAt(i + z[i])) {
                 
-                if(length > 0) {
-                    
-                    length = lps[length - 1];
-                }
-                else {
-                    
-                    lps[i] = 0;
-                    i++;
-                }
+                z[i]++;
+            }
+            
+            if(i + z[i] - 1 > right) {
+                
+                left = i;
+                right = i + z[i] - 1;
             }
         }
         
-        return lps;
+        return z;
     }
 }
