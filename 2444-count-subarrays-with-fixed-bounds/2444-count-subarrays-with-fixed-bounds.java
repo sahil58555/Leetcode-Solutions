@@ -5,16 +5,11 @@ class Solution {
         int min = 0;
         int max = 0;
         int n = nums.length;
-        int breakPoint = nextBreakPoint(0, nums, minK, maxK);
+        int breakPoint = 0;
         
         for(int i = 0 ; i < n ; i++) {
             
-            if(i == breakPoint) {
-                
-                breakPoint = nextBreakPoint(breakPoint + 1, nums, minK, maxK);
-                continue;
-            }
-            
+            breakPoint = nextBreakPoint(Math.max(breakPoint, i), nums, minK, maxK);
             min = indexOf(nums, Math.max(min, i), minK);
             max = indexOf(nums, Math.max(max, i), maxK);
             
