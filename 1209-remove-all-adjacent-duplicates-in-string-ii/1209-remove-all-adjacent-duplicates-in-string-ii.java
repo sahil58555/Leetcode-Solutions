@@ -11,22 +11,20 @@ class Solution {
             }
             else {
                 
-                stack.push(new Node(ch, stack.peek().freq + 1));
+                stack.peek().freq++;
             }
             
             if(stack.peek().freq == k) {
                 
-                for(int i = 1 ; i <= k ; i++) {
-                    
-                    stack.pop();
-                }
+                stack.pop();
             }
         }
         
         StringBuilder sb = new StringBuilder();
         
         for(Node node : stack) {
-            sb.append(node.ch);
+            
+            sb.append((node.ch + "").repeat(node.freq));
         }
         
         return sb.toString();
