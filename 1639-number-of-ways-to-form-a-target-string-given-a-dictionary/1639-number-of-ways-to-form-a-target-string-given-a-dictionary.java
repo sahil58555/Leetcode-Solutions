@@ -37,7 +37,12 @@ class Solution {
         long notTaken = sol(targetIndex, wordIndex + 1, dp);
         
         char ch = target.charAt(targetIndex);
-        long taken = (colCount[wordIndex][ch - 'a'] * sol(targetIndex + 1, wordIndex + 1, dp)) % mod;
+        long taken = colCount[wordIndex][ch - 'a'];
+        
+        if(taken != 0) {
+            
+            taken = (taken * sol(targetIndex + 1, wordIndex + 1, dp)) % mod;
+        }
         
         long totalWays = (taken + notTaken) % mod;
         
