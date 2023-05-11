@@ -1,37 +1,31 @@
 class Solution {
     public int maxUncrossedLines(int[] nums1, int[] nums2) {
         
-        Integer[][] dp = new Integer[nums1.length][nums2.length];
+        int[][] dp = new int[nums1.length + 1][nums2.length + 1];
         
-        return sol(0, 0, nums1, nums2, dp);
+        for(int idx1 = nums1.length - 1 ; idx1 >= 0 ; idx1--) {
+            
+            for(int idx2 = nums2.length - 1 ; idx2 >= 0 ; idx2--) {
+                
+                int ans = 0;
+        
+                if(nums1[idx1] == nums2[idx2]) {
+
+                    ans = 1 + dp[idx1 + 1][idx2 + 1];
+                }
+                else {
+
+                    int option1 = dp[idx1 + 1][idx2];
+                    int option2 = dp[idx1][idx2 + 1];
+
+                    ans = Math.max(option1, option2); 
+                }
+
+                dp[idx1][idx2] = ans;
+            }
+        }
+        
+        return dp[0][0];
     }
     
-    private int sol(int idx1, int idx2, int[] nums1, int[] nums2, Integer[][] dp) {
-        
-        if(idx1 == nums1.length || idx2 == nums2.length) {
-            
-            return 0;
-        }
-        
-        if(dp[idx1][idx2] != null) {
-            
-            return dp[idx1][idx2];
-        }
-        
-        int ans = 0;
-        
-        if(nums1[idx1] == nums2[idx2]) {
-            
-            ans = 1 + sol(idx1 + 1, idx2 + 1, nums1, nums2, dp);
-        }
-        else {
-            
-            int option1 = sol(idx1 + 1, idx2, nums1, nums2, dp);
-            int option2 = sol(idx1, idx2 + 1, nums1, nums2, dp);
-            
-            ans = Math.max(option1, option2); 
-        }
-        
-        return dp[idx1][idx2] = ans;
-    }
 }
